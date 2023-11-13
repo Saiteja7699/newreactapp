@@ -17,13 +17,11 @@ function App() {
   }, []);
 
   const handleItemClick = (itemId, itemName) => {
-    // Call the backend to generate a random cost for the selected item
-    axios.post('http://localhost:3001/generateCost', { itemId, itemName })
+      axios.get('http://localhost:3001/cost')
       .then(response => {
-        const newItem = { id: response.data.itemId, name: response.data.itemName, cost: response.data.cost };
+        const newItem = { id: itemId, name: itemName, cost: response.data.cost };
         setSelectedItems(prevItems => [...prevItems, newItem]);
-        setTotalCost(prevTotalCost => prevTotalCost + response.data.cost); // Update total cost
-
+        setTotalCost(prevTotalCost => prevTotalCost + response.data.cost);
       })
       .catch(error => console.error('Error generating cost:', error));
   };
@@ -32,13 +30,14 @@ function App() {
     <div>
       <header>
         <h1>Grocery List</h1>
-        <a href="https://github.com/your-username/your-repo" target="_blank" rel="noopener noreferrer">
+        <a href="https://github.com/Saiteja7699/newreactapp" target="_blank" rel="noopener noreferrer">
           <FaGithub size={30} />
         </a>
       </header>
       <div className="container">
         <div>
           <h2>Available Items</h2>
+          <div className="selected-items">
           <ul>
             {items.map(item => (
               <li key={item.id} onClick={() => handleItemClick(item.id, item.name)}>
@@ -46,6 +45,7 @@ function App() {
               </li>
             ))}
           </ul>
+          </div>
         </div>
         <div className="selected-container">
           <h2>Selected Items</h2>

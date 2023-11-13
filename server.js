@@ -23,13 +23,12 @@ app.get('/items', (req, res) => {
 });
 
 // Endpoint to generate a random cost for an item
-app.post('/generateCost', (req, res) => {
-  const itemId = req.body.itemId;
-  const itemName = req.body.itemName;
-  // Generate a random cost (replace this with your logic) 
+app.get('/cost', (req, res) => {
+  // Generate a random cost (replace this with your logic)
   const randomCost = Math.floor(Math.random() * 100) + 1;
-  res.json({ itemId, itemName, cost: randomCost });
+  res.json({ cost: randomCost });
 });
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
